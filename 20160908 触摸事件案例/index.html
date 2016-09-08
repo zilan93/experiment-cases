@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>移动段触摸时间demo</title>
+    <style type="text/css" rel="stylesheet">
+        #block{position:absolute;width:20px;height:20px;background: aqua;}
+        .box{width:800px;height:800px;padding:15px;background: #eee;}
+        .box canvas{width:800px;height:800px;}
+    </style>
+</head>
+<body>
+<!--demo 1 -->
+<div id="block"></div>
+<!--demo 2 -->
+<div class="box">
+    <canvas id="canvasObj"></canvas>
+</div>
+<script type="text/javascript">
+    /***demo1——小块跟随鼠标移动js***/
+    var blockObj = document.getElementById("block");
+    blockObj.addEventListener("touchmove",function (event) {
+        if(event.targetTouches.length == 1) {
+            var touch = event.targetTouches[0];
+            blockObj.style.left = touch.pageX + "px";
+            blockObj.style.top = touch.pageY + "px";
+        }
+    },false);
+    /***demo2——绘画js***/
+    var cavasObj = document.getElementById("canvasObj");
+    var ctx = cavasObj.getContext("2d");
+    cavasObj.addEventListener("touchmove",function (event) {
+        for(var i = 0; i < event.touches.length; i++) {
+            var touch = event.touches[i];
+            ctx.beginPath();
+            ctx.arc(touch.pageX,touch.pageY,10,0,2*Math.PI,true);
+            ctx.fill();
+            ctx.stroke();
+        }
+    })
+</script>
+</body>
+</html>
